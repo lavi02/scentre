@@ -1,7 +1,7 @@
 var Router =  require('express');
 var faq = require('../../database/db_faq');
 var router = Router();
-
+ 
 router.get('/api/v1/board/faq', (req, res) => {
     let data = faq.faq_get(req);
     if (data[0] == 0) {
@@ -50,7 +50,7 @@ router.post('/api/v1/board/faq', (req, res) => {
 })
 
 router.delete('/api/v1/faq/{index}', (req, res) => {
-    let data = req.body;
+    let data = req.params.index
     if (data[0] == 0) {
         res.status(200).json({
             "message": "successfully removed."

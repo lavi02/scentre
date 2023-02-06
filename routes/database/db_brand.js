@@ -28,8 +28,7 @@ exports.perfumer_get = async (req) => {
 
 exports.perfume_recommend = async () => {
     await db_data.scentre_.find(
-        {
-        }.exec((err, data) => { 
+        {}.exec((err, data) => { 
             if (!err) 
                 return data;
             else return err; 
@@ -49,7 +48,7 @@ exports.brand_post = (req) => {
             'br_perfumer_list': req.br_perfumer_list
         })
 
-        faq_data.save().then(
+        brand_data.save().then(
             () => {
                 return 0;
             }

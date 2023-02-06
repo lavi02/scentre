@@ -68,9 +68,30 @@ exports.userStatus_put = (req) => {
         ).catch((err) => { return err; });
 }
 
-exports.userStatus_delete = async (id, detail) => {
-    await db_data.scentre_user_data.deleteMany(
-        {id: id}
-    ).then(() => { return 0; })
-    .catch((err) => {return err; })
+exports.userStatus_delete = async (req) => {
+    await db_data.scentre_user_data.update(
+        {
+            "type": req.type,
+            "id": req.id,
+            "name": req.name,
+            "password": req.password,
+            "set_date": req.set_date,
+            "gender": req.gender,
+            "ph_number": req.ph_number,
+            "br_number": req.br_number,
+            "bs_category": req.bs_category,
+            "bs_type": req.bs_type,
+            "address": req.address,
+            "addr_detail": req.addr_detail,
+            "email": req.email,
+            "point": 0,
+            "times_of_order": 0,
+            "status": 1,
+            "register_date": Date.now()
+        }
+    ).then(
+        () => {
+            return 0;
+        }
+    ).catch((err) => { return err; })
 }

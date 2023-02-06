@@ -206,6 +206,17 @@ const mainpage = new mongoose.Schema(
     }, { collection: 'mainpage' }
 )
 
+const perfume_recommend = new mongoose.Schema(
+    {
+        "best": {
+            type: Array
+        },
+        "recommend": {
+            type: Array
+        }
+    }
+)
+
 const qna = new mongoose.Schema(
     {
         index: {
@@ -789,3 +800,4 @@ exports.scentre_calc_log = mongoose.model('calc_log', calc_log);
 exports.scentre_product_detail = mongoose.model('product_detail', product_detail);
 exports.scentre_delivery_detail = mongoose.model('delivery_detail', delivery_detail);
 exports.scentre_review = mongoose.model('review', review);
+exports.scentre_perfume_recommend = mongoose.model('perfume-recommend', perfume_recommend);
