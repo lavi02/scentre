@@ -83,7 +83,7 @@ exports.change_userStatus_rank = async (req) => {
 }
 
 exports.userStatus_delete = async (req) => {
-    await db_data.scentre_user_data.update(
+    await db_data.scentre_user_data.deleteOne(
         {
             "type": req.type,
             "id": req.id,
