@@ -1,7 +1,20 @@
 const db_data = require('../../extra/mg_collection');
 
+exports.order_detail = async (req) => {
+    await db_data.scentre_order_detail.find(
+        {
+            'order_number': req.order_number,
+            'user_name': req.user_name,
+            'product_data': req.product_data
+        }.exec((err, data) => {
+            if (!err)
+                return data;
+            else return err;
+        })
+    )
+}
 exports.order_get = async (req) => {
-    await db_data.scentre_brand.find(
+    await db_data.scentre_order_data.find(
         {
             'order_number': req.order_number,
             'user_name': req.user_name,
@@ -13,6 +26,15 @@ exports.order_get = async (req) => {
             else return err; 
         })
     )
+}
+
+exports.order_logs = async (req) => {
+    await db_data.scentre_brand.find(
+        { 'user_name': req.user_name }
+    ).exec((err, data) => {
+        if (!err)
+            return [data];
+    })
 }
 
 exports.preorder_get = async (req) => {
