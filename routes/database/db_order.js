@@ -33,7 +33,7 @@ exports.order_logs = async (req) => {
         { 'user_name': req.user_name }
     ).exec((err, data) => {
         if (!err)
-            return [data];
+            return [0, data];
     })
 }
 
@@ -75,12 +75,21 @@ exports.preorder_post = (req) => {
         ).catch((err) => { return err; });
 }
 
-exports.order_put = (req, res) => {
-    db.query('', (err, rows) => {
-        if (!err) {
-            res.send(rows);
-        } else {
-            res.send(err);
+exports.order_put = (req) => {
+    try {
+        for (let i = 0; i < Object.keys(req).length; i++) {
+            let keys = Object.keys(req)[i]
+            let values = req[keys]
+            db_data.scentre_preorder_data.update({
+                    'order_number': req.name,
+                    'user_name': req.product_name,
+            },
+            {
+                keys: values
+            })
         }
-    })
+        return 0;
+    } catch (err) {
+        return err;
+    }
 }

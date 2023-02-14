@@ -33,6 +33,24 @@ router.get('/api/v1/users', (req, res) => {
     }
 })
 
+router.get('/api/v1/users/check_id', (req, res) => {
+    let data = users.userStatus_get(req.body);
+
+    if (data[1] != null)
+        res.status(200).json(
+            { "message": "Doesn't match" }
+        )
+    else if (data[1] == null) {
+        res.status(409).json(
+            { "message": "already used ID" }
+        )
+    } else {
+        res.status(400).json(
+            { "message": "invalid input" }
+        )
+    }
+})
+
 router.get('/api/v1/users/find_acc', (req, res) => {
     let data = users.userStatus_get(req.body);
     if (req.body.type == "ID") {

@@ -27,7 +27,7 @@ exports.perfumer_get = async (req) => {
 }
 
 exports.perfume_recommend = async () => {
-    await db_data.scentre_.find(
+    await db_data.scentre_brand.find(
         {}.exec((err, data) => { 
             if (!err) 
                 return data;
