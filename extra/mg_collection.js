@@ -766,6 +766,19 @@ const delivery_detail = new mongoose.Schema(
     }, { collection: 'delivery_detail' }
 )
 
+const servey = new mongoose.Schema(
+    {
+        duplicate: {
+            type: Boolean,
+            required: true
+        },
+        answer: {
+            type: Array,
+            required: true
+        } 
+    }, { collection: servey }
+)
+
 const review = new mongoose.Schema(
     {
         title: {
@@ -801,3 +814,4 @@ exports.scentre_product_detail = mongoose.model('product_detail', product_detail
 exports.scentre_delivery_detail = mongoose.model('delivery_detail', delivery_detail);
 exports.scentre_review = mongoose.model('review', review);
 exports.scentre_perfume_recommend = mongoose.model('perfume-recommend', perfume_recommend);
+exports.scentre_servey = mongoose.model('servey', servey);
