@@ -1,14 +1,19 @@
 var Router =  require('express');
-var faq = require('../../database/db_faq');
+var faq = require('../../../models/db_faq');
 var router = Router();
  
 router.get('/api/v1/board/faq', (req, res) => {
     let data = faq.faq_get(req);
     if (data[0] == 0) {
+        let index = 1;
+        
         res.status(200).json({
-            "index": data[1],
-            "title": data[2]
+            "index": index,
+            "title": data.title,
+            "contents": data.contents
         })
+
+        index += 1;
     }
 
     else {
@@ -18,12 +23,12 @@ router.get('/api/v1/board/faq', (req, res) => {
     }
 })
 
-router.get('/api/v1/board/faq/{index}', (req, res) => {
+router.get('/api/v1/board/faq/:index', (req, res) => {
     let data = faq.faq_get(req);
     if (data[0] == 0) {
         res.status(200).json({
-            "index": data[1],
-            "title": data[2]
+            "data": data.contents,
+            "files": data.files
         })
     }
 
@@ -35,8 +40,8 @@ router.get('/api/v1/board/faq/{index}', (req, res) => {
 })
 
 router.post('/api/v1/board/faq', (req, res) => {
-    let data = req.body;
-    if (data[0] == 0) {
+    let data = faq.faq_post(req);
+    if (data == 0) {
         res.status(201).json({
             "message": "successfully generated."
         })
@@ -49,9 +54,9 @@ router.post('/api/v1/board/faq', (req, res) => {
     }
 })
 
-router.delete('/api/v1/faq/{index}', (req, res) => {
-    let data = req.params.index
-    if (data[0] == 0) {
+router.delete('/api/v1/faq/:index', (req, res) => {
+    let faq_data = faq.faq_delete(req);
+    if (faq_data == 0) {
         res.status(200).json({
             "message": "successfully removed."
         })

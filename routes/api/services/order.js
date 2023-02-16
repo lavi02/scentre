@@ -1,6 +1,6 @@
 var Router =  require('express');
-var order = require('../../database/db_order');
-var user = require('../../database/db_users');
+var order = require('../../../models/db_order');
+var user = require('../../../models/db_users');
 var router = Router();
 
 router.get('/api/v1/order', (req, res) => {

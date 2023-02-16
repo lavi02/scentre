@@ -1,15 +1,14 @@
-const db_data = require('../../extra/mg_collection');
+const db_data = require('../controllers/mg_collection');
 
 exports.faq_get = async (req) => {
     await db_data.scentre_faq.find(
         {
-            'index': req.index,
-            'title': req.title
+            'title': req.body.title
         }.exec((err, data) => {
             if (!err)
-                return data;
+                return [0, data];
             else
-                return err;
+                return [1, err];
         })
     );
 };
@@ -32,8 +31,8 @@ exports.faq_post = (req) => {
 exports.faq_delete = async (req) => {
     await db_data.scentre_faq.deleteMany(
         {
-            'name_of_stock': req.name_of_stock,
-            'index': req.index
+            'name_of_stock': req.body.name_of_stock,
+            'index': req.params.index
         }
     ).then(() => { return 0; })
     .catch((err) => { return err; })

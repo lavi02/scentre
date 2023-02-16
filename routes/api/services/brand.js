@@ -1,5 +1,5 @@
 var Router =  require('express');
-var brand = require('../../database/db_brand');
+var brand = require('../../../models/db_brand');
 var router = Router();
 
 router.get('/api/v1/brand', (req, res) => {

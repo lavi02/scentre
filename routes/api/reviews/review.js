@@ -1,5 +1,5 @@
 var Router =  require('express');
-var users = require('../../database/db_review');
+var users = require('../../../models/db_review');
 var router = Router();
 
 router.get('/api/v1/board/review', (req, res) => {

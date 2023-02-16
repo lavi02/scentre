@@ -1,5 +1,5 @@
 var Router =  require('express');
-var faq = require('../../database/db_qna');
+var faq = require('../../../models/db_qna');
 var router = Router();
 
 router.get('/api/v1/board/qna', (req, res) => {

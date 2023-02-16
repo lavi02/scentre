@@ -54,7 +54,7 @@ router.get('/api/v1/users/check_id', (req, res) => {
 router.get('/api/v1/users/find_acc', (req, res) => {
     let data = users.userStatus_get(req.body);
     if (req.body.type == "ID") {
-        if (data[0] == 0) {
+        if (data == 0) {
             res.status(200).json(
                 { "user_id": data[1].user_id }
             )
@@ -97,7 +97,7 @@ router.put('/api/v1/users/status', (req, res) => {
     if (typeof(data.str) == "String" && typeof(data.img) == "String") {
         let result = users.userStatus_get(data);
 
-        if (result[0] == 0) {
+        if (result == 0) {
             res.status(201).json({
                 "message": "successfully changed."
             })

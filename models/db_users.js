@@ -1,11 +1,11 @@
-const db_data = require('../../extra/mg_collection');
+const db_data = require('../controllers/mg_collection');
 
 exports.userStatus_get = async (id) => {
     await db_data.scentre_user_data.find(
         { 'id': id }.exec((err, data) => { 
             if (!err) 
-                return data;
-            else return err; 
+                return [0, data];
+            else return [1, err]; 
         })
     )
 }

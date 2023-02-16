@@ -1,4 +1,4 @@
-const db_data = require('../../extra/mg_collection');
+const db_data = require('../controllers/mg_collection');
 
 
 exports.uri_get = async (req) => {

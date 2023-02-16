@@ -1,5 +1,5 @@
 var Router =  require('express');
-var brand = require('../../database/db_brand');
+var brand = require('../../../models/db_brand');
 var router = Router();
 
 router.get('/api/v1/brand', (req, res) => {
@@ -26,7 +26,7 @@ router.get('/api/v1/brand', (req, res) => {
 
 router.post('/api/v1/brand', (req, res) => {
     let data = brand.brand_post(req);
-    if (data[0] == 0) {
+    if (data == 0) {
         res.status(201).json({
             "message": "successfully generated."
         })
@@ -41,7 +41,7 @@ router.post('/api/v1/brand', (req, res) => {
 
 router.delete('/api/v1/brand', (req, res) => {
     let data = brand.brand_post(req);
-    if (data[0] == 0) {
+    if (data == 0) {
         res.status(201).json({
             "message": "successfully removed."
         })
@@ -56,7 +56,7 @@ router.delete('/api/v1/brand', (req, res) => {
 
 router.get('/api/v1/brand/perfume', (req, res) => {
     let data = brand.brand_get(req);
-    if (data[0] == 0) {
+    if (data == 0) {
         res.status(200).json({
             "br_code": data[1],
             "recommend": data[2]

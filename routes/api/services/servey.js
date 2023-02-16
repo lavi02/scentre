@@ -1,5 +1,5 @@
 var Router =  require('express');
-var servey = require('../../database/db_servey');
+var servey = require('../../../models/db_servey');
 var router = Router();
 
 router.get('/api/v1/services/servey', (req, res) => {
