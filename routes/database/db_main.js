@@ -12,3 +12,13 @@ exports.perfumer_get = async (req) => {
         })
     )
 }
+
+exports.banner_get = async (req) => {
+    await db_data.scentre_mainpage.find(
+        {}.exec((err, data) => {
+            if (!err)
+                return data;
+            else return err;
+        })
+    )
+}

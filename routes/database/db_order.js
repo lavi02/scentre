@@ -56,23 +56,21 @@ exports.preorder_get = async (req) => {
 
 exports.preorder_post = (req) => {
     const brand_data = new db_data.scentre_preorder_data(
-        {
-            'order_date': req.order_date, 
-            'order_number': req.order_number,
-            'user_name': req.user_name,
-            'payment_date': Date.now().toString(),
-            'product_name': req.product_name,
-            'bank_acc': req.bank_acc,
-            'payment_detail': req.payment_amount,
-            'payment_status': req.payment_status,
-            'brand_name': req.br_name
-        })
+    {
+        'order_date': req.order_date, 
+        'order_number': req.order_number,
+        'user_name': req.user_name,
+        'payment_date': Date.now().toString(),
+        'product_name': req.product_name,
+        'bank_acc': req.bank_acc,
+        'payment_detail': req.payment_amount,
+        'payment_status': req.payment_status,
+        'brand_name': req.br_name
+    })
 
-        brand_data.save().then(
-            () => {
-                return 0;
-            }
-        ).catch((err) => { return err; });
+    brand_data.save().then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }
 
 exports.order_put = (req) => {
@@ -92,4 +90,38 @@ exports.order_put = (req) => {
     } catch (err) {
         return err;
     }
+}
+
+exports.order_get_fees = async (req) => {
+    await db_data.scentre_adjustment_list.find(
+        {
+            'br_number': req.br_number
+        }.exec((err, data) => { 
+            if (!err) 
+                return data;
+            else return err; 
+        })
+    )
+}
+
+exports.order_get_exchanges = (req) => {
+    const exchanges = new db_data.scentre_order_data(
+        {
+            'order_date': Date.now(), 
+            'order_number': req.order_number,
+            'user_name': req.user_name,
+            'payment_date': Date.now().toString(),
+            'product_name': req.product_name,
+            'bank_acc': req.bank_acc,
+            'payment_detail': req.payment_amount,
+            'payment_status': req.payment_status,
+            'brand_name': req.br_name
+        }
+    )
+
+    exchanges.save().then(
+        () => {
+            return 0;
+        }
+    ).catch((err) => { return err; });
 }

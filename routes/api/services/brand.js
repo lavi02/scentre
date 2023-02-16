@@ -58,8 +58,8 @@ router.get('/api/v1/brand/perfume', (req, res) => {
     let data = brand.brand_get(req);
     if (data[0] == 0) {
         res.status(200).json({
-            "br_code": data[1],
-            "recommend": data[2]
+            "br_code": data.br_code,
+            "recommend": data.br_
         })
     }
 

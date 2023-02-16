@@ -6,14 +6,14 @@ router.get('/api/v1/brand', (req, res) => {
     let data = brand.brand_get(req);
     if (data[0] == 0) {
         res.status(200).json({
-            "br_code": data[1],
-            "br_name": data[2],
-            "br_logo": data[3],
-            "br_detail": data[4],
-            "br_web_bg": data[5],
-            "br_app_bg": data[6],
-            "br_perfumer_list": data[7],
-            "br_stocks": data[8]
+            "br_code": data.br_code,
+            "br_name": data.br_name,
+            "br_logo": data.br_logo,
+            "br_detail": data.br_detail,
+            "br_web_bg": data.br_web_bg,
+            "br_app_bg": data.br_app_bg,
+            "br_perfumer_list": data.br_perfumer_list,
+            "br_stocks": data.br_stocks
         })
     }
 

@@ -4,11 +4,11 @@ var router = Router();
 
 router.get('/api/v1/services/servey', (req, res) => {
     let data = servey.servey_get(req);
-    if (data[0] == 0) {
+    if (data.duplicate = false) {
         res.status(200).json({
-            "str": data[1],
-            "img": data[2],
-            "notes": data[3]
+            "str": data.answer[1],
+            "img": data.answer[2],
+            "notes": data.answer[3]
         })
     }
 
@@ -20,11 +20,11 @@ router.get('/api/v1/services/servey', (req, res) => {
 })
 
 router.post('/api/v1/services/servey', (req, res) => {
-    let data = req.body;
+    let data = req;
     if (typeof(data.str) == "String" && typeof(data.img) == "String") {
-        let result = servey.server_post(data);
+        let result = servey.servey_post(data);
 
-        if (result[0] == 0) {
+        if (result == 0) {
             res.status(200).json({
                 "message": "successfully generated."
             })
@@ -41,9 +41,9 @@ router.post('/api/v1/services/servey', (req, res) => {
 router.put('/api/v1/services/servey', (req, res) => {
     let data = req.body;
     if (typeof(data.str) == "String" && typeof(data.img) == "String") {
-        let result = servey.server_post(data);
+        let result = servey.servey_post(data);
 
-        if (result[0] == 0) {
+        if (result == 0) {
             res.status(200).json({
                 "message": "successfully generated."
             })
@@ -59,11 +59,11 @@ router.put('/api/v1/services/servey', (req, res) => {
 
 router.delete('/api/v1/services/servey', (req, res) => {
     let data = servey.servey_get(req);
-    if (data[0] == 0) {
+    if (data == 0) {
         res.status(200).json({
-            "str": data[1],
-            "img": data[2],
-            "notes": data[3]
+            "str": data.answer[1],
+            "img": data.answer[2],
+            "notes": data.answer[3]
         })
     }
 
