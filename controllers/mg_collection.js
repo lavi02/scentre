@@ -776,7 +776,7 @@ const servey = new mongoose.Schema(
             type: Array,
             required: true
         } 
-    }, { collection: servey }
+    }, { collection: "servey" }
 )
 const review = new mongoose.Schema(
     {
