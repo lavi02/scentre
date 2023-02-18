@@ -2,6 +2,10 @@ var Router =  require('express');
 var users = require('../../../models/db_users');
 var router = Router();
 
+const bcrypt = require("bcryptjs");
+const db_data = require('../../../controllers/mg_collection');
+const { jwt_query } = require('../../../controllers/jwt');
+
 router.get('/api/v1/users', (req, res) => {
     let data = users.userStatus_get(req.body);
     if (data != null) {
@@ -111,14 +115,35 @@ router.put('/api/v1/users/status', (req, res) => {
     }
 })
 
-router.post('/api/v1/users/register', (req, res) => {
+router.post('/api/v1/users/register', async (req, res) => {
     let data = req.body;
     let result = users.userStatus_get(data);
 
-    if (data[0] == 0) {
-        res.status(200).json({
-            "message": "successfully generated."
-        })
+    if (result[0] == 0) {
+        if (!result[1]) {
+            const salt = await bcrypt.genSalt(10);
+            data.password = bcrypt.hash(data.password, salt);
+
+            let status = users.userStatus_post(data);
+
+            if (status == 0){
+                res.status(200).json({
+                    "message": "successfully generated."
+                })
+            }
+
+            else {
+                res.status(401).json(
+                    { "message": "try again." }
+                )
+            }
+        }
+
+        else {
+            res.status(200).json(
+                { "message": "user already existed." }
+            )
+        }
     }
 
     else {
@@ -131,9 +156,19 @@ router.post('/api/v1/users/register', (req, res) => {
 router.post('/api/v1/users/login', (req, res) => {
     let data = req.body;
     if (data[0] == 0) {
-        res.status(200).json({
-            "message": "successfully generated."
-        })
+        if (!data[1]) {
+            let jwt_data = jwt_query(data);
+            res.status(200).json({
+                "message": "successfully login.",
+                "token": jwt_data
+            })
+        }
+
+        else {
+            res.status(400).json(
+                { "message": "wrong user data" }
+            )
+        }
     }
 
     else {
