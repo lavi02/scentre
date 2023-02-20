@@ -208,10 +208,10 @@ const mainpage = new mongoose.Schema(
 
 const perfume_recommend = new mongoose.Schema(
     {
-        "best": {
+        best: {
             type: Array
         },
-        "recommend": {
+        recommend: {
             type: Array
         }
     }
