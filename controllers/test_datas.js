@@ -193,5 +193,85 @@ test_delivery.save((err, data) => {
     if (!err)
         console.log("save complete - delivery datas");
     else
+        console.log(err);                                  
+})
+
+
+/*
+    order datas
+*/
+let test_order_data = scentre.scentre_order_data({
+    order_date: new Date().toLocaleString(),
+    payment_date: new Date().toLocaleString(),
+    delivery_date: new Date().toLocaleString(),
+    payment_amount: 0,
+    product_amount: 0,
+    payment_detail: "test",
+    payment_method: "test",
+    payment_status: "test",
+    product_status: "test",
+    cancel_detail: "test",
+    exchange_detail : "test",
+    prod_return_detail: "test",
+    refund_detail: "test",
+    brand_name: "test",
+    user_id: "test"
+})
+
+test_order_data.save((err, data) => {
+    if (!err)
+        console.log("save complete - test order datas");
+    else
+        console.log(err);
+})
+
+let test_product = scentre.scentre_product({
+    name: "test",
+    tag: "test",
+    prod_short: "test",
+    search_tag: "test",
+    model_name: "test",
+    product_code: "test",
+    perfumer_name: "test",
+    detail: "test",
+    expected_date: "test",
+    court: "test",
+    out_of_stock: "test",
+    status: "test",
+    price: 0,
+    amount_saved: 0,
+    amount_delivery: "test",
+    item_option: "test",
+    item_option_price: "test",
+    item_image: "test",
+    item_image_sub: "test",
+    item_image_detail: "test",
+    item_note: "test",
+    product_detail: "test",
+    event_data: "None"
+})
+
+test_product.save((err, data) => {
+    if (!err)
+        console.log("save complete - test product datas");
+    else
+        console.log(err);
+})
+
+let test_servey = scentre.scentre_servey({
+    duplicate: false,
+    answer: [
+        {
+            "str": "test",
+            "img": "test",
+            "note": ["test"]
+        }
+    ]
+})
+
+test_servey.save((err, data) => {
+    if (!err)
+        console.log("save complete - test servey datas");
+    else
         console.log(err);
 })
