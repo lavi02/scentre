@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const urandom = require("node:crypto");
-exports.key = urandom(64).toString('hex');
+const urandom = require("crypto");
+exports.key = urandom.createHash('sha512').update('h3n3sy4839').digest('hex');
 
 exports.jwt_query = async (req) => {
     const id = req.id;

@@ -647,6 +647,13 @@ const adjustment_list = new mongoose.Schema(
     }, { collection: 'adjustment_list' }
 )
 
+const imageSchema = new mongoose.Schema(
+    {
+        image_name: String,
+        image: String
+    }, { collection: 'images' }
+)
+
 const calc_log = new mongoose.Schema(
     {
         user_id: {
@@ -814,3 +821,4 @@ exports.scentre_delivery_detail = mongoose.model('delivery_detail', delivery_det
 exports.scentre_review = mongoose.model('review', review);
 exports.scentre_perfume_recommend = mongoose.model('perfume-recommend', perfume_recommend);
 exports.scentre_servey = mongoose.model('servey', servey);
+exports.scentre_image = mongoose.model('images', imageSchema);

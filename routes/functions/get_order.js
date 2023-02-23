@@ -1,3 +1,3 @@
-exports.get_order_brand = () => {
+exports.get_image = () => {
     
 }
