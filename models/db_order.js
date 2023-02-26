@@ -1,44 +1,39 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.order_detail = async (req) => {
-    await db_data.scentre_order_detail.find(
+    return db_data.scentre_order_detail.find(
         {
             'order_number': req.order_number,
             'user_name': req.user_name,
             'product_data': req.product_data
-        }.exec((err, data) => {
-            if (!err)
-                return data;
-            else return err;
-        })
-    )
+        }
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }
 exports.order_get = async (req) => {
-    await db_data.scentre_order_data.find(
+    return db_data.scentre_order_data.find(
         {
             'order_number': req.order_number,
             'user_name': req.user_name,
             'order_date': req.order_date,
             'product_name': req.product_name
-        }.exec((err, data) => { 
-            if (!err) 
-                return data;
-            else return err; 
-        })
-    )
+        }
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }
 
 exports.order_logs = async (req) => {
-    await db_data.scentre_brand.find(
+    return db_data.scentre_brand.find(
         { 'user_name': req.user_name }
-    ).exec((err, data) => {
-        if (!err)
-            return [0, data];
-    })
+    ).then(
+        (res) => { return 0; }
+    ).catch((err) => { return err; });
 }
 
 exports.preorder_get = async (req) => {
-    await db_data.scentre_preorder_data.find(
+    return db_data.scentre_preorder_data.find(
         {
             'order_number': req.order_number,
             'user_name': req.user_name,
@@ -46,12 +41,10 @@ exports.preorder_get = async (req) => {
             'bank_acc': req.bank_acc,
             'used_point': req.used_point,
             'br_name': req.br_name
-        }.exec((err, data) => { 
-            if (!err) 
-                return data;
-            else return err; 
-        })
-    )
+        }
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }
 
 exports.preorder_post = (req) => {
@@ -68,8 +61,8 @@ exports.preorder_post = (req) => {
         'brand_name': req.br_name
     })
 
-    brand_data.save().then(
-        () => { return 0; }
+    return brand_data.save().then(
+        (res) => { return brand_data === res; }
     ).catch((err) => { return err; });
 }
 
@@ -93,7 +86,7 @@ exports.order_put = (req) => {
 }
 
 exports.order_get_fees = async (req) => {
-    await db_data.scentre_adjustment_list.find(
+    return db_data.scentre_adjustment_list.find(
         {
             'br_number': req.br_number
         }.exec((err, data) => { 
@@ -119,9 +112,9 @@ exports.order_get_exchanges = (req) => {
         }
     )
 
-    exchanges.save().then(
-        () => {
-            return 0;
+    return exchanges.save().then(
+        (res) => {
+            return res === exchanges;
         }
     ).catch((err) => { return err; });
 }

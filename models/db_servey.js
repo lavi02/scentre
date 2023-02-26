@@ -1,12 +1,8 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.servey_get = async (req) => {
-    await db_data.sc.find(
-        {'id': req.id }.exec((err, data) => { 
-            if (!err) 
-                return data;
-            else return err; 
-        })
+    return db_data.sc.find(
+        {'id': req.id }
     )
 }
 
@@ -18,32 +14,24 @@ exports.servey_post = (req) => {
             'answer': req.answer
         })
 
-        servey_data.save().then(
-            () => {
-                return 0;
+        return servey_data.save().then(
+            (res) => {
+                return res === servey_data;
             }
         ).catch((err) => { return err; });
 }
 
 exports.servey_put = (req) => {
-    db_data.scentre_servey.update({
+    return db_data.scentre_servey.update({
         'user_name': req.user_name,
     },
-    {
-        'answer': req.answer
-    }.exec((err, data) => {
-        if(!err)
-            return data;
-        else return err;
-    })
-    )
+    { 'answer': req.answer})
 }
 
 exports.servey_delete = async (req) => {
-    await db_data.scentre_servey.deleteMany(
+    return db_data.scentre_servey.deleteMany(
         {
             'user_name': req.user_name,
         }
-    ).then(() => { return 0; })
-    .catch((err) => { return err; })
+    )
 }

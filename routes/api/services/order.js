@@ -7,7 +7,7 @@ router.get('/api/v1/order', (req, res) => {
     let data = order.order_get(req.body);
     let data_detail = order.order_detail(req.body);
     let user_detail = user.userStatus_get(req.body);
-    if (data[0] == 0) {
+    if (data == 0) {
         data = data[1]
         res.status(200).json({
             "client_id": data.user_id,

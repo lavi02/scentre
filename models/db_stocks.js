@@ -1,19 +1,14 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.stocks_get = async (req) => {
-    await db_data.scentre_product.find(
+    return db_data.scentre_product.find(
         {
             'name': req.name, 
             'tag': req.tag,
             'prod_short': req.prod_short,
             'search_tag': req.search_tag,
             'product_name': req.product_name
-        }.exec((err, data) => { 
-            if (!err) 
-                return data;
-            else return err; 
         })
-    )
 }
 
 exports.stocks_post = (req) => {
@@ -45,9 +40,9 @@ exports.stocks_post = (req) => {
             event_data: req.event_data
         })
 
-        user_data.save().then(
-            () => {
-                return 0;
+        return user_data.save().then(
+            (result) => {
+                return result === user_data;
             }
         ).catch((err) => { return err; });
 }
@@ -75,8 +70,7 @@ exports.stocks_put = (req) => {
 }
 
 exports.stocks_delete = async (req) => {
-    await db_data.scentre_user_data.deleteMany(
+    return db_data.scentre_user_data.deleteMany(
         { product_code: req.product_code }
-    ).then(() => { return 0; })
-    .catch((err) => {return err; })
+    )
 }

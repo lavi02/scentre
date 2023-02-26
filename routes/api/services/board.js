@@ -24,7 +24,7 @@ router.get('/api/v1/brand', (req, res) => {
     }
 })
 
-router.post('/api/v1/brand', (req, res) => {
+router.post('/api/v1/board', (req, res) => {
     let data = brand.brand_post(req);
     if (data == 0) {
         res.status(201).json({
@@ -39,7 +39,7 @@ router.post('/api/v1/brand', (req, res) => {
     }
 })
 
-router.delete('/api/v1/brand', (req, res) => {
+router.delete('/api/v1/board', (req, res) => {
     let data = brand.brand_post(req);
     if (data == 0) {
         res.status(201).json({

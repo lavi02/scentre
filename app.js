@@ -12,6 +12,7 @@ var board_api = require("./routes/api/services/board");
 var order_api = require("./routes/api/services/order");
 var servey_api = require("./routes/api/services/servey");
 var user_api = require("./routes/api/user/status");
+var brand_api = require("./routes/api/services/brand");
 
 var app = express();
 
@@ -26,13 +27,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api/v1/board/faq', faq_api);
-app.use('/api/v1/board/qna', qna_api);
-app.use('/api/v1/board/review', review_api);
-app.use('/api/v1/board/', board_api);
-app.use('/api/v1/order', order_api);
-app.use('/api/v1/services/servey', servey_api);
-app.use('/api/v1/users', user_api);
+app.use('/', faq_api);
+app.use('/', qna_api);
+app.use('/', review_api);
+app.use('/', board_api);
+app.use('/', order_api);
+app.use('/', servey_api);
+app.use('/', user_api);
+app.use('/api/v1/brand', brand_api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,7 +49,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log(err);
 });
 
 module.exports = app;

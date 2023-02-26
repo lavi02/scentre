@@ -1,16 +1,13 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.faq_get = async (req) => {
-    await db_data.scentre_faq.find(
+    return db_data.scentre_faq.find(
         {
             'title': req.body.title
-        }.exec((err, data) => {
-            if (!err)
-                return [0, data];
-            else
-                return [1, err];
-        })
-    );
+        }
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 };
 
 exports.faq_post = (req) => {
@@ -21,19 +18,20 @@ exports.faq_post = (req) => {
             'contents': req.contents
         })
 
-        faq_data.save().then(
-            () => {
-                return 0;
+        return faq_data.save().then(
+            (res) => {
+                return res === faq_data;
             }
         ).catch((err) => { return err; });
 }
 
 exports.faq_delete = async (req) => {
-    await db_data.scentre_faq.deleteMany(
+    return db_data.scentre_faq.deleteMany(
         {
             'name_of_stock': req.body.name_of_stock,
             'index': req.params.index
         }
-    ).then(() => { return 0; })
-    .catch((err) => { return err; })
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }

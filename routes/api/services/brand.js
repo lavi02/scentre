@@ -2,8 +2,9 @@ var Router =  require('express');
 var brand = require('../../../models/db_brand');
 var router = Router();
 
-router.get('/api/v1/brand', (req, res) => {
-    let data = brand.brand_get(req.body);
+router.get('/', (req, res) => {
+    let data = req.body;
+    let result = brand.brand_get(data);
     if (data[0] == 0) {
         res.status(200).json({
             "br_code": data.br_code,
@@ -19,29 +20,31 @@ router.get('/api/v1/brand', (req, res) => {
 
     else {
         res.status(400).json({
-            "message": "bad input parameter"
+            "message": error
         })
     }
 })
 
-router.post('/api/v1/brand', (req, res) => {
-    let data = brand.brand_post(req.body);
-    if (data[0] == 0) {
+router.post('/', async function (req, res) {
+    let data = req.body;
+    let result = await brand.brand_post(data);
+
+    if (result == true) {
         res.status(201).json({
             "message": "successfully generated."
         })
     }
 
     else {
-        res.status(400).json({
-            "message": "bad input parameter"
+        res.status(401).json({
+            message: result
         })
     }
 })
 
-router.delete('/api/v1/brand', (req, res) => {
-    let data = brand.brand_post(req.body);
-    if (data[0] == 0) {
+router.delete('/', (req, res) => {
+    let data = brand.brand_delete(req.body);
+    if (data.acknowledges === true) {
         res.status(201).json({
             "message": "successfully removed."
         })
@@ -49,7 +52,7 @@ router.delete('/api/v1/brand', (req, res) => {
 
     else {
         res.status(400).json({
-            "message": "bad input parameter"
+            "message": "test"
         })
     }
 })
@@ -65,7 +68,7 @@ router.get('/api/v1/brand/perfume', (req, res) => {
 
     else {
         res.status(400).json({
-            "message": "bad input parameter"
+            "message": "test"
         })
     }
 })
@@ -81,7 +84,7 @@ router.post('/api/v1/brand/perfumers', (req, res) => {
 
     else {
         res.status(400).json({
-            "message": "bad input parameter"
+            "message": "test"
         })
     }
 })

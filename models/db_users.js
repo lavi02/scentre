@@ -1,12 +1,8 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.userStatus_get = async (id) => {
-    await db_data.scentre_user_data.find(
-        { 'id': id }.exec((err, data) => { 
-            if (!err) 
-                return [0, data];
-            else return [1, err]; 
-        })
+    return db_data.scentre_user_data.find(
+        { 'id': id }
     )
 }
 
@@ -32,9 +28,9 @@ exports.userStatus_post = (req) => {
             "register_date": Date.now()
         })
 
-        user_data.save().then(
-            () => {
-                return 0;
+        return user_data.save().then(
+            (res) => {
+                return res === user_data;
             }
         ).catch((err) => { return err; });
 }
@@ -61,37 +57,29 @@ exports.userStatus_put = (req) => {
             "register_date": Date.now()
         })
 
-        user_data.save().then(
-            () => {
-                return 0;
+        return user_data.save().then(
+            (res) => {
+                return res === user_data;
             }
         ).catch((err) => { return err; });
 }
 
 exports.change_userStatus_rank = async (req) => {
-    await db_data.scentre_user_data.update(
+    return db_data.scentre_user_data.update(
         {
             "id": req.id,
             "name": req.name,
         },
         { "status": req.status }
-    ).then(
-        () => {
-            return 0;
-        }
-    ).catch((err) => { return err; })
+    )
 }
 
 exports.userStatus_delete = async (req) => {
-    await db_data.scentre_user_data.deleteOne(
+    return db_data.scentre_user_data.deleteOne(
         {
             "type": req.type,
             "id": req.id,
             "name": req.name
         }
-    ).then(
-        () => {
-            return 0;
-        }
-    ).catch((err) => { return err; })
+    )
 }

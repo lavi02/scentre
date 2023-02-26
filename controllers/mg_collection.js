@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
 mongoose.connect(
-    'mongodb://13.125.174.232:27017/scentre_db',
-    {
-        useMongoClient:true
-    }
+    'mongodb://localplayer0:t1mcrescento@13.125.174.232:27017/scentre_db?authSource=admin'
 )
+let test = mongoose.connection;
+test.on('error', console.error.bind(console, 'conection error: '));
+test.once('open', () => { console.log("h") });
 
 const user_token = new mongoose.Schema(
     {

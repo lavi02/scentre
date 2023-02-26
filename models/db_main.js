@@ -1,26 +1,22 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.perfumer_get = async (req) => {
-    await db_data.scentre_brand.find(
+    return db_data.scentre_brand.find(
         {
             'perfumer_data': req.user_id,
             'code_number': req.br_code
-        }.exec((err, data) => { 
-            if (!err) 
-                return data;
-            else return err; 
-        })
-    )
+        }
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }
 
 exports.banner_get = async (req) => {
-    await db_data.scentre_mainpage.find(
-        {}.exec((err, data) => {
-            if (!err)
-                return data;
-            else return err;
-        })
-    )
+    return db_data.scentre_mainpage.find(
+        {}
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }
 
 exports.image_datas_get = async (req) => {
@@ -28,12 +24,10 @@ exports.image_datas_get = async (req) => {
         { 
             image_name: req.image_name,
             user_name: req.user_name
-         }.exec((err, data) => {
-            if (!err)
-                return data;
-            else return err;
-        })
-    )
+         }
+    ).then(
+        () => { return 0; }
+    ).catch((err) => { return err; });
 }
 
 exports.image_datas_post =  (req) => {
@@ -43,7 +37,7 @@ exports.image_datas_post =  (req) => {
             user_name: req.user_name
         })
 
-        image_data.save().then(
-            () => { return 0; }
+        return image_data.save().then(
+            (res) => { return res === image_data; }
         ).catch((err) => { return err; });
 }
