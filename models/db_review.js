@@ -1,11 +1,9 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.review_get = async (req) => {
-    return db_data.scentre_review.find(
-        {
-            'title': req.title
-        }
-    )
+        return db_data.scentre_review.find(
+            {}
+        )
 }
 
 exports.review_post = (req) => {

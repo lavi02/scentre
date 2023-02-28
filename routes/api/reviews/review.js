@@ -1,26 +1,29 @@
 var Router =  require('express');
-var users = require('../../../models/db_review');
+var review = require('../../../models/db_review');
 var router = Router();
 
-router.get('/api/v1/board/review', (req, res) => {
-    let data = users.userStatus_get(req);
-    if (data[0] == 0) {
+router.get('/api/v1/review', async (req, res) => {
+    let data = await review.review_get(req.body);
+    console.log(data);
+
+    if (data[0] != null) {
+        datas = []
+        for (let i = 0; data.length; i++) {
+            datas.push(data[i]);
+        }
         res.status(200).json({
-            "index": data[1],
-            "title": data[2]
+            data
         })
     }
 
     else {
-        res.status(400).json({
-            "message": "bad input parameter"
-        })
+        res.status(200).json({"message": "there is no datas."})
     }
 })
 
-router.post('/api/v1/board/review', (req, res) => {
-    let data = req.body;
-    if (data[0] == 0) {
+router.post('/api/v1/board/review', async (req, res) => {
+    let data = await review.review_post(req.body);
+    if (data == true) {
         res.status(201).json({
             "message": "successfully generated."
         })
@@ -33,9 +36,9 @@ router.post('/api/v1/board/review', (req, res) => {
     }
 })
 
-router.delete('/api/v1/board/review', (req, res) => {
-    let data = req.body;
-    if (data[0] == 0) {
+router.delete('/api/v1/board/review', async (req, res) => {
+    let data = await review.review_delete(req.body);
+    if (data == 0) {
         res.status(200).json({
             "message": "successfully removed."
         })

@@ -11,12 +11,8 @@ exports.perfumer_get = async (req) => {
     ).catch((err) => { return err; });
 }
 
-exports.banner_get = async (req) => {
-    return db_data.scentre_mainpage.find(
-        {}
-    ).then(
-        () => { return 0; }
-    ).catch((err) => { return err; });
+exports.banner_get = async () => {
+    return db_data.scentre_mainpage.find({});
 }
 
 exports.image_datas_get = async (req) => {
@@ -25,9 +21,7 @@ exports.image_datas_get = async (req) => {
             image_name: req.image_name,
             user_name: req.user_name
          }
-    ).then(
-        () => { return 0; }
-    ).catch((err) => { return err; });
+    );
 }
 
 exports.image_datas_post =  (req) => {

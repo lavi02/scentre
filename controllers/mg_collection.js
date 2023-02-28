@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-    'mongodb://localplayer0:t1mcrescento@13.125.174.232:27017/scentre_db?authSource=admin'
+    'mongodb://localplayer01:senkawa020504@3.38.11.171:27017/scentre_db?authSource=admin'
 )
 let test = mongoose.connection;
 test.on('error', console.error.bind(console, 'conection error: '));
@@ -202,9 +202,9 @@ const faq = new mongoose.Schema(
 
 const mainpage = new mongoose.Schema(
     {
-        banner: {
-            type: String
-        }
+        banner: [
+            new mongoose.Schema({bannerLink: String})
+        ]
     }, { collection: 'mainpage' }
 )
 
@@ -399,78 +399,44 @@ const delivery_data = new mongoose.Schema(
 
 const order_data = new mongoose.Schema(
     {
-        order_date: {
-            type: String,
-            required: true
-        },
-        payment_date: {
-            type: String,
-            required: true
-        },
-        delivery_date: {
-            type: String,
-            required: true
-        },
-        payment_amount: {
-            type: Number,
-            required: true
-        },
-        product_amount: {
-            type: Number,
-            required: true
-        },
-        payment_detail: {
-            type: String,
-            required: true
-        },
-        payment_method: {
-            type: String,
-            required: true
-        },
-        payment_status: {
-            type: String,
-            required: true
-        },
-        product_status: {
-            type: String,
-            required: true
-        },
-        cancel_detail: {
-            type: String,
-            required: true
-        },
-        exchange_detail: {
-            type: String,
-            required: true
-        },
-        prod_return_detail: {
-            type: String,
-            required: true
-        },
-        refund_detail: {
-            type: String,
-            required: true
-        },
-        product_number: {
-            type: String,
-            required: true
-        },
-        return_number: {
-            type: String,
-            required: true
-        },
-        product_detail: {
-            type: String,
-            required: true
-        },
-        brand_name: {
-            type: String,
-            required: true
-        },
-        user_id: {
-            type: String,
-            required: true
-        }
+        checkState: String,
+        state: String,
+        previousState: String,
+        order_date: String,
+        payment_date: String,
+        product_number: String,
+        user_id: String,
+        logis: String,
+        extra_number: String,
+        recallInvoice: String,
+        recallDeliveryCharge: String,
+        options: String,
+        quantity: String,
+        productName: String,
+        brand: String,
+        perfumer: String,
+        orderNum: String,
+        paymentMethod: String,
+        usedPoint: String,
+        paidAmount: String,
+        stock: String,
+        to: String,
+        deliveryCharge: String,
+        number: String,
+        address: String,
+        specAddress: String,
+        memo: String,
+        refundAmount: String,
+        orderProductNum: String,
+        productPrice: String,
+        bank: String,
+        cost: String,
+        profit: String,
+        depositAmount: String,
+        process: String,
+        paymentScheduled: String,
+        imputation: String,
+        reason: String
     }, { collection: "order_data" }
 )
 
@@ -524,6 +490,10 @@ const order_detail_data = new mongoose.Schema(
             type: String,
             required: true
         },
+        logis: {
+            type: String,
+            required: true
+        }
     }, { collection: "order_detail_data" }
 )
 

@@ -2,11 +2,7 @@ const db_data = require('../controllers/mg_collection');
 
 
 exports.uri_get = async (req) => {
-    await db_data.scentre_sns_url.find(
-        {}
-    ).then(
-        () => { return 0; }
-    ).catch((err) => { return err; });
+    return db_data.scentre_sns_url.find({})
 }
 
 exports.uri_post = async (req) => {

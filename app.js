@@ -13,8 +13,13 @@ var order_api = require("./routes/api/services/order");
 var servey_api = require("./routes/api/services/servey");
 var user_api = require("./routes/api/user/status");
 var brand_api = require("./routes/api/services/brand");
+var banner_api = require("./routes/functions/banner")
+
+var test_datas = require("./controllers/test_datas");
 
 var app = express();
+
+test_datas;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,6 +40,8 @@ app.use('/', order_api);
 app.use('/', servey_api);
 app.use('/', user_api);
 app.use('/api/v1/brand', brand_api);
+app.use('/api/v1/components', banner_api);
+///
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
