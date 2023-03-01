@@ -31,8 +31,8 @@ const user_data = new mongoose.Schema(
             default: ''
         },
         set_date: {
-            type: Date,
-            default: new Date('1900-01-01T00:00:00')
+            type: String,
+            default: "00000000"
         },
         gender: {
             type: String
@@ -61,8 +61,7 @@ const user_data = new mongoose.Schema(
         },
         point: {
             type: String,
-            default: '0',
-            required: true
+            default: '0'
         },
         times_of_order: {
             type: Number,
@@ -74,16 +73,14 @@ const user_data = new mongoose.Schema(
         },
         register_date: {
             type: Date,
-            default: new Date('1900-01-01T00:00:00'),
+            default: Date.now(),
             required: true
         },
         time_login: {
-            type: String,
-            default: new Date("1900-01-01T00:00:00")
+            type: String
         },
         time_logout: {
-            type: String,
-            default: new Date('1900-01-01T00:00:00')
+            type: String
         }
     }, { collection: 'user_data' }
 )

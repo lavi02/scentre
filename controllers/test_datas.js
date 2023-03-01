@@ -9,17 +9,20 @@ let test_user_data = new scentre.scentre_user_data({
     type: 0,
     id: "test",
     name: "test_user",
-    set_date: new Date().toLocaleString(),
+    set_date: Date.now(),
     gender: "남성",
     ph_number: "01012345678",
     bs_number: "test1234",
+    bs_type: "test",
     address: "시군구",
     addr_detail: "123",
     email: "test@test.com",
     point: 0,
     times_of_order: 0,
     status: 0,
-    register_date: new Date().toLocaleString(),
+    register_date: Date.now(),
+    time_login: Date.now(),
+    time_logout: Date.now()
 })
 
 test_user_data.save((err, data) => {
