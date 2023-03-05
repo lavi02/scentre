@@ -11,7 +11,10 @@ exports.servey_post = (req) => {
         {  
             'username': req.user_name,
             'duplicate': req.duplicate,
-            'answer': req.answer
+            'image': req.image,
+            'answer': req.answer,
+            'question': req.question,
+            'subQuestion': req.subQuestion,
         })
 
         return servey_data.save().then(
@@ -25,13 +28,13 @@ exports.servey_put = (req) => {
     return db_data.scentre_servey.update({
         'user_name': req.user_name,
     },
-    { 'answer': req.answer})
+    { req })
 }
 
 exports.servey_delete = async (req) => {
     return db_data.scentre_servey.deleteMany(
         {
-            'user_name': req.user_name,
+            'user_name': req.user_name
         }
     )
 }

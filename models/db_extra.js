@@ -42,6 +42,6 @@ exports.perfumers_best_list = async (req) => {
         ).catch((err) => { return err; });
 }
 
-exports.best_and_recommenD = async () => {
+exports.best_and_recommend = async () => {
     return db_data.scentre_perfume_recommend.find({});
 }

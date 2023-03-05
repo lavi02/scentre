@@ -56,7 +56,7 @@ router.get('/api/v1/order', (req, res) => {
 })
 
 router.post('/api/v1/order', (req, res) => {
-    let data = order.preorder_post(req);
+    let data = order.order_post(req.body);
     if (data == 0) {
         res.status(201).json({
             "message": "successfully generated."
@@ -71,7 +71,7 @@ router.post('/api/v1/order', (req, res) => {
 })
 
 router.put('/api/v1/order', (req, res) => {
-    let data = brand.brand_post(req);
+    let data = order.order_put(req.body);
     if (data == 0) {
         res.status(201).json({
             "message": "successfully generated."

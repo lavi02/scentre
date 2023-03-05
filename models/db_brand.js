@@ -8,9 +8,24 @@ exports.brand_get = async (req) => {
                 'code_number': req.data_detail
             }
         )
-    }
+    }    
+}
 
-    
+exports.brand_add_perfumer = async (req) => {
+    let data = db_data.scentre_brand.find(
+        { 'br_code': req.br_code }
+    )
+
+    let memberData = data[0].perfumer_data;
+    for (let i = 0; i < memberData.length(); i++) {
+        if (memberData[i].id == req.perfumer_id) {
+            memberData.splice(i, 1);
+        }
+    }
+    return db_data.scentre_brand.findByIdAndUpdate(
+        { 'br_code': req.br_code },
+        { 'perfumer_data': memberData }
+    )
 }
 
 exports.perfumer_get = async (req) => {
@@ -19,12 +34,6 @@ exports.perfumer_get = async (req) => {
             'perfumer_data': req.user_id,
             'code_number': req.br_code
         }
-    )
-}
-
-exports.perfume_recommend = async () => {
-    return db_data.scentre_brand.find(
-        {}
     )
 }
 
@@ -51,26 +60,7 @@ exports.brand_post = async (req) => {
 }
 
 exports.brand_delete = async (req) => {
-    if (type == 0) {
-        return db_data.scentre_faq.deleteMany(
-            {
-                'br_code': req.br_code
-            }, {}
-        )
-    } else {
-        let data = db_data.scentre_brand.find(
+    return db_data.scentre_faq.deleteMany(
             { 'br_code': req.br_code }
-        )
-
-        let memberData = data.perfumer_data;
-        for (let i = 0; i < memberData.length(); i++) {
-            if (memberData[i].id == req.perfumer_id) {
-                memberData.splice(i, 1);
-            }
-        }
-        return db_data.scentre_brand.findByIdAndUpdate(
-            { 'br_code': req.br_code },
-            { 'perfumer_data': memberData }
-        )
-    }
+    )
 }

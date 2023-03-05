@@ -7,7 +7,7 @@ router.get('/api/v1/review', async (req, res) => {
     console.log(data);
 
     if (data[0] != null) {
-        datas = []
+        let datas = []
         for (let i = 0; data.length; i++) {
             datas.push(data[i]);
         }

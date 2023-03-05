@@ -565,6 +565,14 @@ const delivery_detail = new mongoose.Schema(
 
 const servey = new mongoose.Schema(
     {
+        username: {
+            type: String,
+            required: true
+        },
+        index: {
+            type: String,
+            required: true
+        },
         duplicate: {
             type: Boolean,
             required: true
@@ -572,7 +580,15 @@ const servey = new mongoose.Schema(
         answer: {
             type: Array,
             required: true
-        } 
+        },
+        question: {
+            type: Array,
+            required: true
+        },
+        subQuestion: {
+            type: Array,
+            required: true
+        }
     }, { collection: "servey" }
 )
 const review = new mongoose.Schema(

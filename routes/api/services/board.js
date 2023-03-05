@@ -26,7 +26,7 @@ router.get('/api/v1/brand', (req, res) => {
 })
 
 router.get('/api/v1/brand/perfume', (req, res) => {
-    let data = main.best_and_recommenD();
+    let data = main.best_and_recommend();
     if (data == 0) {
         res.status(200).json({
             "best": data[0].best,

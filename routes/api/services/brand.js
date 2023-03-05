@@ -1,11 +1,12 @@
 var Router =  require('express');
 var brand = require('../../../models/db_brand');
+var main = require("../../../models/db_extra");
 var router = Router();
 
 router.get('/', (req, res) => {
     let data = req.body;
     let result = brand.brand_get(data);
-    if (data[0] == 0) {
+    if (result[0] == 0) {
         res.status(200).json({
             "br_code": data.br_code,
             "br_name": data.br_name,
@@ -57,34 +58,33 @@ router.delete('/', (req, res) => {
     }
 })
 
-router.get('/api/v1/brand/perfume', (req, res) => {
-    let data = brand.brand_get(req);
-    if (data[0] == 0) {
+router.get('/perfume', (req, res) => {
+    let data = main.best_and_recommend(req);
+    if (data != null) {
         res.status(200).json({
-            "br_code": data.br_code,
-            "recommend": data.br_
+            "br_code": data[0].best,
+            "recommend": data[0].recommend
         })
     }
 
     else {
         res.status(400).json({
-            "message": "test"
+            "message": "bad input parameter."
         })
     }
 })
 
-router.post('/api/v1/brand/perfumers', (req, res) => {
-    let data = brand.brand_get(req);
+router.post('/perfumers', (req, res) => {
+    let data = brand.brand_add_perfumer(req.body);
     if (data[0] == 0) {
         res.status(200).json({
-            "br_code": data[1],
-            "recommend": data[2]
+            "message": "successfully added."
         })
     }
 
     else {
         res.status(400).json({
-            "message": "test"
+            "message": "invalid input"
         })
     }
 })
