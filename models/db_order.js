@@ -11,6 +11,12 @@ exports.order_get = async (req) => {
     );
 }
 
+exports.order_admin_get = async (req) => {
+    return db_data.scentre_order_data.find({
+        'brand': req.brand
+    })
+}
+
 exports.order_get_all = async () => {
     return db_data.scentre_order_data.find({});
 }

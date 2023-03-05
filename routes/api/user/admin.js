@@ -2,7 +2,7 @@ var Router =  require('express');
 var user = require('../../../models/db_users');
 var main = require("../../../models/db_extra");
 var order = require("../../../models/db_order");
-var stocks = require("../../../models/db_stock");
+var stocks = require("../../../models/db_stocks");
 var router = Router();
 
 router.get('/user', (req, res) => {
@@ -51,7 +51,7 @@ router.get('/fee', (req, res) => {
 })
 
 router.get('/order', (req, res) => {
-    let data = order.order_get(req.body);
+    let data = order.order_admin_get(req.body);
     if (data[0] != null) {
         res.status(200).json({
             data: data[0]
