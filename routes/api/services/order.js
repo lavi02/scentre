@@ -4,28 +4,47 @@ var user = require('../../../models/db_users');
 var router = Router();
 
 router.get('/api/v1/order', (req, res) => {
-    let data = order.order_get(req.body);
-    let data_detail = order.order_detail(req.body);
-    let user_detail = user.userStatus_get(req.body);
+    let data = order.order_get(req)
     if (data == 0) {
-        data = data[1]
         res.status(200).json({
-            "client_id": data.user_id,
-            "name": req.body.user_name,
-            "order_number": data.order_number,
-            "ph_number": data_detail.ph_number,
-            "address": data_detail.user_address,
-            "addr_detail": data_detail.user_addr_detail,
-            "product_name": data.product_name,
-            "option": data.option,
-            "number_of_stocks": data.number_of_stocks,
-            "common_price": data_detail.product_amount,
-            "payment_price": data_detail.payment_detail,
-            "used_point": data_detail.used_point,
-            "left_point": user_detail.left_point,
+            "checkState": data.checkState,
+            "state": data.state,
+            "previousState": data.state,
+            "order_date": data.order_date,
             "payment_date": data.payment_date,
-            "delivery_date": data_detail.delivery_date,
-            "deli_date_detail": data_detail.deli_date_detail
+            "product_number": data.product_number,
+            "user_id": data.user_id,
+            "logis": data.logis,
+            "extra_number": data.extra_number,
+            "recallInvoice": data.recallInvoice,
+            "recallDeliveryCharge": data.recallDeliveryCharge,
+            "options": data.options,
+            "quantity": data.quantity,
+            "productName": data.productName,
+            "brand": data.brand,
+            "perfumer": data.perfumer,
+            "orderNum": data.orderNum,
+            "paymentMethod": data.paymentMethod,
+            "usedPoint": data.usedPoint,
+            "paidAmount": data.paidAmount,
+            "stock": data.stock,
+            "to": data.to,
+            "deliveryCharge": data.deliveryCharge,
+            "number": data.number,
+            "address": data.address,
+            "specAddress": data.specAddress,
+            "memo": data.memo,
+            "refundAmount": data.refundAmount,
+            "orderProductNum": data.orderProductNum,
+            "productPrice": data.productPrice,
+            "bank": data.bank,
+            "cost": data.cost,
+            "profit": data.profit,
+            "depositAmount": data.depositAmount,
+            "process": data.process,
+            "paymentScheduled": data.paymentScheduled,
+            "imputation": data.imputation,
+            "reason": data.reason
         })
     }
 

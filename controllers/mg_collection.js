@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -6,7 +9,11 @@ mongoose.connect(
 )
 let test = mongoose.connection;
 test.on('error', console.error.bind(console, 'conection error: '));
-test.once('open', () => { console.log("h") });
+test.once('open', () => { 
+    console.log("h");
+    gfs = Grid('mongodb://localplayer01:senkawa020504@3.38.11.171:27017/scentre_db?authSource=admin', mongoose.mongo);  
+    //gfs.collection('uploads');
+});
 
 const user_token = new mongoose.Schema(
     {
@@ -83,90 +90,6 @@ const user_data = new mongoose.Schema(
             type: String
         }
     }, { collection: 'user_data' }
-)
-
-const order_detail = new mongoose.Schema(
-    {
-        owner_id: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        client_id: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        name: {
-            type: String,       
-            required: true,
-            default: ''
-        },
-        order_id: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        ph_number: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        address: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        addr_detail: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        product_name: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        option: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        count: {
-            type: Number,
-            required: true,
-            default: 0
-        },
-        common_price: {
-            type: Number,
-            required: true,
-            default: 0
-        },
-        payment_price: {
-            type: Number,
-            required: true,
-            default: 0
-        },
-        used_point: {
-            type: Number,
-            required: true,
-            default: 0
-        },
-        left_point: {
-            type: Number,
-            required: true,
-            default: 0
-        },
-        payment_date: {
-            type: Date
-        },
-        delivery_date: {
-            type: Date
-        },
-        deli_date_detail: {
-            type: Date
-        }
-    }, { collection: 'order_detail' }
 )
 
 const sns_url = new mongoose.Schema(
@@ -302,54 +225,6 @@ const brand = new mongoose.Schema(
     }, { collection: 'delivery_data' }
 )
 
-const preorder_data = new mongoose.Schema(
-    {
-        order_date: {
-            type: String,
-            required: true,
-            default: '0000-00-00'
-        },
-        payment_date: {
-            type: String,
-            required: true,
-            default: '0000-00-00'
-        },
-        order_number: {
-            type: String,
-            required: true
-        },
-        user_name: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        product_data: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        bank_acc: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        payment_status: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        payment_detail: {
-            type: String,
-            required: true
-        },
-        brand_name: {
-            type: String,
-            required: true,
-            default: ''
-        }
-    }, { collection: 'delivery_data' }
-)
-
 const delivery_data = new mongoose.Schema(
     {
         product_status: {
@@ -396,7 +271,6 @@ const delivery_data = new mongoose.Schema(
 
 const order_data = new mongoose.Schema(
     {
-        checkState: String,
         state: String,
         previousState: String,
         order_date: String,
@@ -414,84 +288,27 @@ const order_data = new mongoose.Schema(
         perfumer: String,
         orderNum: String,
         paymentMethod: String,
-        usedPoint: String,
-        paidAmount: String,
+        usedPoint: Number,
+        paidAmount: Number,
         stock: String,
         to: String,
         deliveryCharge: String,
-        number: String,
+        number: Number,
         address: String,
         specAddress: String,
         memo: String,
-        refundAmount: String,
+        refundAmount: Number,
         orderProductNum: String,
         productPrice: String,
         bank: String,
-        cost: String,
+        cost: Number,
         profit: String,
-        depositAmount: String,
+        depositAmount: Number,
         process: String,
         paymentScheduled: String,
         imputation: String,
         reason: String
     }, { collection: "order_data" }
-)
-
-const order_detail_data = new mongoose.Schema(
-    {
-        order_date: {
-            type: String,
-            required: true
-        },
-        extra_date: {
-            type: String,
-            required: true
-        },
-        order_number: {
-            type: String,
-            required: true
-        },
-        extra_number: {
-            type: String,
-            required: true
-        },
-        user_name: {
-            type: String,
-            required: true
-        },
-        brand_name: {
-            type: String,
-            required: true
-        },
-        perfumer_name: {
-            type: String,
-            required: true
-        },
-        product_data: {
-            type: String,
-            required: true
-        },
-        product_count: {
-            type: Number,
-            required: true
-        },
-        product_amount: {
-            type: String,
-            required: true
-        },
-        payment_detail: {
-            type: String,
-            required: true
-        },
-        payment_method: {
-            type: String,
-            required: true
-        },
-        logis: {
-            type: String,
-            required: true
-        }
-    }, { collection: "order_detail_data" }
 )
 
 const product = new mongoose.Schema(
@@ -587,6 +404,10 @@ const product = new mongoose.Schema(
         event_data: {
             type: String,
             required: true
+        },
+        sales_volume: {
+            type: Number,
+            default: 0
         }
     }, { collection: 'product' }
 )
@@ -772,16 +593,13 @@ const review = new mongoose.Schema(
 )
 
 exports.scentre_user_data = mongoose.model('user_data', user_data);
-exports.scentre_order_detail = mongoose.model('order_detail', order_detail);
 exports.scentre_sns_url = mongoose.model('sns_url', sns_url);
 exports.scentre_faq = mongoose.model('faq', faq);
 exports.scentre_qna = mongoose.model('qna', qna);
 exports.scentre_mainpage = mongoose.model('mainpage', mainpage);
 exports.scentre_brand = mongoose.model('brand', brand);
 exports.scentre_delivery_data = mongoose.model('delivery_data', delivery_data);
-exports.scentre_preorder_data = mongoose.model('preorder_data', preorder_data);
 exports.scentre_order_data = mongoose.model('order_data', order_data);
-exports.scentre_order_detail_data = mongoose.model('order_detail_data', order_detail_data);
 exports.scentre_product = mongoose.model('product', product);
 exports.scentre_adjustment_list = mongoose.model('adjustment_list', adjustment_list);
 exports.scentre_calc_log = mongoose.model('calc_log', calc_log);

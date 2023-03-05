@@ -25,42 +25,12 @@ router.get('/api/v1/brand', (req, res) => {
     }
 })
 
-router.post('/api/v1/board', (req, res) => {
-    let data = brand.brand_post(req);
-    if (data == 0) {
-        res.status(201).json({
-            "message": "successfully generated."
-        })
-    }
-
-    else {
-        res.status(400).json({
-            "message": "bad input parameter"
-        })
-    }
-})
-
-router.delete('/api/v1/board', (req, res) => {
-    let data = brand.brand_post(req);
-    if (data == 0) {
-        res.status(201).json({
-            "message": "successfully removed."
-        })
-    }
-
-    else {
-        res.status(400).json({
-            "message": "bad input parameter"
-        })
-    }
-})
-
 router.get('/api/v1/brand/perfume', (req, res) => {
-    let data = brand.brand_get(req);
+    let data = main.best_and_recommenD();
     if (data == 0) {
         res.status(200).json({
-            "br_code": data[1],
-            "recommend": data[2]
+            "best": data[0].best,
+            "recommend": data[0].recommend
         })
     }
 
@@ -80,6 +50,36 @@ router.get('/api/v1/uri', async (req, res) => {
             "youtube": data[0].youtube,
             "instagram": data[0].instagram
         })
+    }
+
+    else {
+        res.status(400).json({
+            "message": "bad input parameter"
+        })
+    }
+})
+
+router.get('/api/v1/uri/:uri', async (req, res) => {
+    let data = await main.uri_get();
+
+    if (data != null) {
+        if (req.params.uri == 'kakao') {
+            res.status(200).json({
+                "kakao": data[0].kakao
+            })
+        }
+
+        else if (req.params.uri == 'youtube') {
+            res.status(200).json({
+                "youtube": data[0].youtube
+            })
+        }
+
+        else {
+            res.status(200).json({
+                "instagram": data[0].instagram
+            })
+        }
     }
 
     else {

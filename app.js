@@ -16,6 +16,7 @@ var brand_api = require("./routes/api/services/brand");
 var banner_api = require("./routes/functions/banner")
 
 var test_datas = require("./controllers/test_datas");
+//var image = require("./middlewares/file_upload");
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use('/', servey_api);
 app.use('/', user_api);
 app.use('/api/v1/brand', brand_api);
 app.use('/api/v1/components', banner_api);
+//app.use('/', image);
 ///
 
 // catch 404 and forward to error handler
@@ -56,7 +58,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  console.log(err);
+  res.send(err);
 });
 
 module.exports = app;

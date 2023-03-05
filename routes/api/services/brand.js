@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 
     else {
         res.status(400).json({
-            "message": error
+            "message": error 
         })
     }
 })

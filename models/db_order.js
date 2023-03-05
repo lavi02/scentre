@@ -1,16 +1,5 @@
 const db_data = require('../controllers/mg_collection');
 
-exports.order_detail = async (req) => {
-    return db_data.scentre_order_detail.find(
-        {
-            'order_number': req.order_number,
-            'user_name': req.user_name,
-            'product_data': req.product_data
-        }
-    ).then(
-        () => { return 0; }
-    ).catch((err) => { return err; });
-}
 exports.order_get = async (req) => {
     return db_data.scentre_order_data.find(
         {
@@ -19,46 +8,101 @@ exports.order_get = async (req) => {
             'order_date': req.order_date,
             'product_name': req.product_name
         }
-    ).then(
-        () => { return 0; }
-    ).catch((err) => { return err; });
+    );
+}
+
+exports.order_get_all = async () => {
+    return db_data.scentre_order_data.find({});
 }
 
 exports.order_logs = async (req) => {
-    return db_data.scentre_brand.find(
+    return db_data.scentre_order_data.find(
         { 'user_name': req.user_name }
-    ).then(
-        (res) => { return 0; }
-    ).catch((err) => { return err; });
+    )
 }
 
 exports.preorder_get = async (req) => {
-    return db_data.scentre_preorder_data.find(
+    return db_data.scentre_order_data.find(
         {
-            'order_number': req.order_number,
-            'user_name': req.user_name,
-            'order_date': req.order_date,
-            'bank_acc': req.bank_acc,
-            'used_point': req.used_point,
-            'br_name': req.br_name
+            state: "0",
+            productNum: req.productNum,
+            user_id: req.user_id,
+            orderNum: req.orderNum
         }
-    ).then(
-        () => { return 0; }
+    );
+}
+
+exports.order_post = async (req) => {
+    let data = req.body;
+
+    const order_data = new db_data.scentre_order_data(
+        {
+            "state": data.state,
+            "previousState": data.state,
+            "order_date": data.order_date,
+            "payment_date": data.payment_date,
+            "product_number": data.product_number,
+            "user_id": data.user_id,
+            "logis": data.logis,
+            "extra_number": data.extra_number,
+            "recallInvoice": data.recallInvoice,
+            "recallDeliveryCharge": data.recallDeliveryCharge,
+            "options": data.options,
+            "quantity": data.quantity,
+            "productName": data.productName,
+            "brand": data.brand,
+            "perfumer": data.perfumer,
+            "orderNum": data.orderNum,
+            "paymentMethod": data.paymentMethod,
+            "usedPoint": data.usedPoint,
+            "paidAmount": data.paidAmount,
+            "stock": data.stock,
+            "to": data.to,
+            "deliveryCharge": data.deliveryCharge,
+            "number": data.number,
+            "address": data.address,
+            "specAddress": data.specAddress,
+            "memo": data.memo,
+            "refundAmount": data.refundAmount,
+            "orderProductNum": data.orderProductNum,
+            "productPrice": data.productPrice,
+            "bank": data.bank,
+            "cost": data.cost,
+            "profit": data.profit,
+            "depositAmount": data.depositAmount,
+            "process": data.process,
+            "paymentScheduled": data.paymentScheduled,
+            "imputation": data.imputation,
+            "reason": data.reason
+        }
+    )
+
+    return order_data.save().then(
+        (res) => { return order_data === res; }
     ).catch((err) => { return err; });
 }
 
 exports.preorder_post = (req) => {
-    const brand_data = new db_data.scentre_preorder_data(
+    const brand_data = new db_data.scentre_order_data(
     {
-        'order_date': req.order_date, 
-        'order_number': req.order_number,
-        'user_name': req.user_name,
+        'state': 0,
+        'orderNum': req.order_Num,
+        'user_id': req.user_id,
+        'quantity': req.quantity,
         'payment_date': Date.now().toString(),
-        'product_name': req.product_name,
-        'bank_acc': req.bank_acc,
+        'perfumer': req.perfumer,
+        'product_number': req.product_number,
+        'productName': req.productName,
+        'bank': req.bank,
         'payment_detail': req.payment_amount,
         'payment_status': req.payment_status,
-        'brand_name': req.br_name
+        'brand': req.brand,
+        'usedPoint': req.usedPoint,
+        'paidAmount': req.paidAmount,
+        'address': req.address,
+        'specAddress': req.specAddress,
+        'cost': req.cost,
+        'depositAmount': req.depositAmount
     })
 
     return brand_data.save().then(
@@ -72,8 +116,8 @@ exports.order_put = (req) => {
             let keys = Object.keys(req)[i]
             let values = req[keys]
             db_data.scentre_preorder_data.update({
-                    'order_number': req.name,
-                    'user_name': req.product_name,
+                    'orderNum': req.orderNum,
+                    'user_id': req.user_id,
             },
             {
                 keys: values
@@ -95,6 +139,24 @@ exports.order_get_fees = async (req) => {
             else return err; 
         })
     )
+}
+
+exports.order_fees = async (req) => {
+    const fees = new db_data.scentre_adjustment_list(
+        {
+            'br_number': req.br_number,
+            'total_amount': req.total_amount,
+            'fee': req.fee,
+            'calc_amount': req.calc_amount,
+            'none_calc_amount': req.none_calc_amount
+        }
+    )
+
+    return fees.save().then(
+        (res) => {
+            return res === fees;
+        }
+    ).catch((err) => { return err; });
 }
 
 exports.order_get_exchanges = (req) => {
