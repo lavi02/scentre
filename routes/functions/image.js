@@ -1,28 +1,32 @@
 var Router =  require('express');
-var file_upload = require('../../middlewares/file_upload');
 var router = Router();
+const images = require("../../middlewares/file_upload");
+const db_data = require('../../controllers/mg_collection');
+const multer = require("multer");
 
-const bcrypt = require("bcryptjs");
-const db_data = require('../../../controllers/mg_collection');
-const { jwt_query } = require('../../../controllers/jwt');
-
-router.post('/api/v1/upload', (req, res) => {
-    if (req.file) {
-        let data = file_upload.uploadMiddleWare(req.body, req.file);
-        if (data == 0) {
-            res.status(201).json({
-                "message": "successfully generated."
-            })
-        }
-
-        else {
-            res.status(400).json({
-                "message": "bad input parameter"
-            })
-        }
-    } else {
+router.post('/api/v1/upload', images.image_storage.single('image'), (req, res) => {
+    console.log(req.file.originalname + Date.now().toString());
+    if (req.file === undefined)
         res.status(400).json({
-            "message": "bad input parameter"
+            "message": "bad input parameters."
         })
+    else {
+        const image_uri = new db_data.scentre_file_upload(
+        {
+            'title': req.file.originalname,
+            'path': './uploads/'
+        })
+
+        image_uri.save().then(
+            res.status(200).json({
+            "message": "successfully generated."
+            })
+        ).catch((err) => {
+            res.status(400).json({
+            "message": err
+            })
+        })    
     }
 })
+
+module.exports = router;

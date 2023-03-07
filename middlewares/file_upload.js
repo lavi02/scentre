@@ -1,21 +1,15 @@
-const util = require("util");
 const multer = require("multer");
-const GridFsStorage = require('multer-gridfs-storage');
-const collection = require("../controllers/mg_collection");
+const path = require('path');
 
-let image_storage = new GridFsStorage({
-    URL: 'mongodb://3.38.11.171:27017/scentre_db',
-    file: (req, file) => {
-        return new Promise((resolve, reject) => {
-            const filename = file.originalname;
-            const fileInfo = {
-            filename: filename,
-            bucketName: 'uploads'
-            };
-        resolve(fileInfo);
-        })
-    }
-})
+exports.image_storage = multer({
+    storage: multer.diskStorage({
+        destination(req, file, done) {
+            done(null, './uploads/');
+        },
 
-let upload = multer({ image_storage }).single('file');
-exports.uploadMiddleWare = util.promisify(upload);
+        filename(req, file, done) {
+            const ext = path.extname(file.originalname);
+            done(null, path.basename(file.originalname, ext) + '_' + Date.now() + '_' + ext);
+        }
+    })
+});

@@ -7,9 +7,13 @@ router.get('/banner', async (req, res) => {
 
     
     if (data != null) {
-        res.status(200).json({
-            data: data[0].banner
-        })
+        data_list = [
+            data[0].banner[0].bannerLink,
+            data[0].banner[1].bannerLink,
+            data[0].banner[2].bannerLink,
+            data[0].banner[3].bannerLink
+        ]
+        res.status(200).json(data_list)
     }
 
     else {

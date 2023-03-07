@@ -207,11 +207,11 @@ let test_product = scentre.scentre_product({
     price: 0,
     amount_saved: 0,
     amount_delivery: "test",
-    item_option: "test",
-    item_option_price: "test",
+    item_option: [],
+    item_option_price: 0,
     item_image: "test",
     item_image_sub: "test",
-    item_image_detail: "test",
+    item_image_detail: [],
     item_note: "test",
     product_detail: "test",
     event_data: "None"
@@ -225,12 +225,16 @@ test_product.save((err, data) => {
 })
 
 let test_servey = scentre.scentre_servey({
+    index: 0,
     duplicate: false,
     answer: [
         {
-            "str": "test",
-            "img": "test",
-            "note": ["test"]
+            "index": 0,
+            "duplicate": "false",
+            "image": ["test"],
+            "answer": [],
+            "question": [],
+            "subQuestion": []
         }
     ]
 })

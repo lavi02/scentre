@@ -5,7 +5,7 @@ var router = Router();
 
 router.get('/api/v1/order', (req, res) => {
     let data = order.order_get(req)
-    if (data == 0) {
+    if (data != null) {
         res.status(200).json({
             "checkState": data.checkState,
             "state": data.state,

@@ -1,4 +1,5 @@
 const db_data = require('../controllers/mg_collection');
+const images = require("../middlewares/file_upload");
 
 exports.perfumer_get = async (req) => {
     return db_data.scentre_brand.find(
@@ -22,16 +23,4 @@ exports.image_datas_get = async (req) => {
             user_name: req.user_name
          }
     );
-}
-
-exports.image_datas_post =  (req) => {
-    const image_data = new db_data.scentre_image(
-        {
-            image_name: req.image_name,
-            user_name: req.user_name
-        })
-
-        return image_data.save().then(
-            (res) => { return res === image_data; }
-        ).catch((err) => { return err; });
 }

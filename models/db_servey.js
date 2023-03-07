@@ -9,7 +9,7 @@ exports.servey_get = async (req) => {
 exports.servey_post = (req) => {
     const servey_data = new db_data.scentre_servey(
         {  
-            'username': req.user_name,
+            'index': req.index,
             'duplicate': req.duplicate,
             'image': req.image,
             'answer': req.answer,

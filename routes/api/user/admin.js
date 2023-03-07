@@ -8,9 +8,7 @@ var router = Router();
 router.get('/user', (req, res) => {
     let data = user.userStatus_get(req.body);
     if (data[0] != null) {
-        res.status(200).json({
-            data: data[0]
-        })
+        res.status(200).send(data[0])
     }
 
     else {

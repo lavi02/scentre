@@ -6,7 +6,7 @@ var router = Router();
 router.get('/', (req, res) => {
     let data = req.body;
     let result = brand.brand_get(data);
-    if (result[0] == 0) {
+    if (result != null) {
         res.status(200).json({
             "br_code": data.br_code,
             "br_name": data.br_name,
@@ -76,7 +76,7 @@ router.get('/perfume', (req, res) => {
 
 router.post('/perfumers', (req, res) => {
     let data = brand.brand_add_perfumer(req.body);
-    if (data[0] == 0) {
+    if (data != null) {
         res.status(200).json({
             "message": "successfully added."
         })

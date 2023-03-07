@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
+const { Collection } = require('mongodb');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -136,7 +137,7 @@ const perfume_recommend = new mongoose.Schema(
         recommend: {
             type: Array
         }
-    }
+    }, { collection: 'perfume_recommend' }
 )
 
 const qna = new mongoose.Schema(
@@ -155,12 +156,10 @@ const qna = new mongoose.Schema(
         },
         user_id: {
             type: String,
-            required: true,
             default: ''
         },
         files: {
             type: String,
-            required: true,
             default: ''
         },
         reply_status: {
@@ -214,8 +213,7 @@ const brand = new mongoose.Schema(
             default: 0
         },
         payment_detail: {
-            type: Number,
-            required: true,
+            type: String,
             default: 0
         },
         payment_method: {
@@ -374,8 +372,7 @@ const product = new mongoose.Schema(
             required: true
         },
         item_option: {
-            type: String,
-            required: true
+            type: Array
         },
         item_option_price: {
             type: Number,
@@ -390,8 +387,7 @@ const product = new mongoose.Schema(
             required: true
         },
         item_image_detail: {
-            type: String,
-            required: true
+            type: Array
         },
         item_note: {
             type: String,
@@ -565,10 +561,6 @@ const delivery_detail = new mongoose.Schema(
 
 const servey = new mongoose.Schema(
     {
-        username: {
-            type: String,
-            required: true
-        },
         index: {
             type: String,
             required: true
@@ -578,19 +570,30 @@ const servey = new mongoose.Schema(
             required: true
         },
         answer: {
-            type: Array,
-            required: true
+            type: Array
         },
         question: {
-            type: Array,
-            required: true
+            type: Array
         },
         subQuestion: {
-            type: Array,
-            required: true
+            type: Array
         }
     }, { collection: "servey" }
 )
+
+const file_upload = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true
+        },
+
+        path: {
+            type: String,
+            required: true
+        }
+    }, { collection: "file_upload" }
+);
 const review = new mongoose.Schema(
     {
         title: {
@@ -625,3 +628,4 @@ exports.scentre_review = mongoose.model('review', review);
 exports.scentre_perfume_recommend = mongoose.model('perfume-recommend', perfume_recommend);
 exports.scentre_servey = mongoose.model('servey', servey);
 exports.scentre_image = mongoose.model('images', imageSchema);
+exports.scentre_file_upload = mongoose.model("file_upload", file_upload);

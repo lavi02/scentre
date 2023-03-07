@@ -5,7 +5,7 @@ var router = Router();
 
 router.get('/api/v1/brand', (req, res) => {
     let data = brand.brand_get(req);
-    if (data[0] == 0) {
+    if (data[0] != null) {
         res.status(200).json({
             "br_code": data.br_code,
             "br_name": data.br_name,
@@ -27,7 +27,7 @@ router.get('/api/v1/brand', (req, res) => {
 
 router.get('/api/v1/brand/perfume', (req, res) => {
     let data = main.best_and_recommend();
-    if (data == 0) {
+    if (data != null) {
         res.status(200).json({
             "best": data[0].best,
             "recommend": data[0].recommend
@@ -91,7 +91,7 @@ router.get('/api/v1/uri/:uri', async (req, res) => {
 
 router.post('/api/v1/brand/perfumers', (req, res) => {
     let data = brand.brand_get(req);
-    if (data[0] == 0) {
+    if (data != null) {
         res.status(200).json({
             "br_code": data[1],
             "recommend": data[2]

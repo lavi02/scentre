@@ -18,7 +18,7 @@ var banner_api = require("./routes/functions/banner")
 var admin_api = require("./routes/api/user/admin");
 
 var test_datas = require("./controllers/test_datas");
-//var image = require("./middlewares/file_upload");
+var image = require("./routes/functions/image");
 
 var app = express();
 
@@ -43,9 +43,9 @@ app.use('/', order_api);
 app.use('/', servey_api);
 app.use('/', user_api);
 app.use('/api/v1/brand', brand_api);
-app.use('/api/v1/components', banner_api);
+app.use('/api/v1/components/', banner_api);
 app.use('/api/v1/admin', admin_api);
-//app.use('/', image);
+app.use('/', image);
 ///
 
 // catch 404 and forward to error handler

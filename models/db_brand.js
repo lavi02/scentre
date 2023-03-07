@@ -1,14 +1,7 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.brand_get = async (req) => {
-    if (req.data_type == "brand_name") {
-        return db_data.scentre_brand.find(
-            {
-                'brand_name': req.data_type,
-                'code_number': req.data_detail
-            }
-        )
-    }    
+    return db_data.scentre_brand.find({})  
 }
 
 exports.brand_add_perfumer = async (req) => {

@@ -2,12 +2,7 @@ const db_data = require('../controllers/mg_collection');
 
 exports.order_get = async (req) => {
     return db_data.scentre_order_data.find(
-        {
-            'order_number': req.order_number,
-            'user_name': req.user_name,
-            'order_date': req.order_date,
-            'product_name': req.product_name
-        }
+        {}
     );
 }
 

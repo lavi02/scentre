@@ -7,9 +7,7 @@ router.get('/', (req, res) => {
     let data = req.body;
     let result = await stocks.stocks_get(data);
     if (result != null) {
-        res.status(200).json({
-            'data': data[0]
-        })
+        res.status(200).json(data[0])
     }
 
     else {
