@@ -1,9 +1,12 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.stocks_get = async (req) => {
+    if (Object.keys(req).length === 0 && req.constructor === Object)
+        return db_data.scentre_product.find({});
+
     return db_data.scentre_product.find(
         {
-            'name': req.name, 
+            'name': req.name,
             'tag': req.client_name,
             'product_name': req.product_name
         })

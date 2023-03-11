@@ -1,6 +1,7 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.order_get = async (req) => {
+    if (req == undefined) { console.log(123) }
     return db_data.scentre_order_data.find(
         {}
     );
@@ -8,7 +9,7 @@ exports.order_get = async (req) => {
 
 exports.order_admin_get = async (req) => {
     return db_data.scentre_order_data.find({
-        'brand': req.brand
+        'brand': req.brand_name
     })
 }
 

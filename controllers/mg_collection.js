@@ -38,6 +38,9 @@ const user_data = new mongoose.Schema(
             type: String,
             default: ''
         },
+        password: {
+            type: String
+        },
         set_date: {
             type: String,
             default: "00000000"
@@ -89,6 +92,10 @@ const user_data = new mongoose.Schema(
         },
         time_logout: {
             type: String
+        },
+        token: {
+            type: String,
+            default: "Null"
         }
     }, { collection: 'user_data' }
 )
@@ -117,6 +124,9 @@ const faq = new mongoose.Schema(
         },
         content: {
             type: String
+        },
+        files: {
+            type: Array
         }
     }, { collection: 'faq' }
 )
@@ -159,8 +169,8 @@ const qna = new mongoose.Schema(
             default: ''
         },
         files: {
-            type: String,
-            default: ''
+            type: Array,
+            default: []
         },
         reply_status: {
             type: Boolean
@@ -170,46 +180,42 @@ const qna = new mongoose.Schema(
 
 const brand = new mongoose.Schema(
     {
-        code_number: {
-            type: Number,
-            required: true
-        },
-        brand_name: {
+        br_code: {
             type: String,
             required: true
         },
-        logo: {
+        br_name: {
             type: String,
             required: true
         },
-        brand_detail: {
+        br_logo: {
             type: String,
             required: true
         },
-        image_web: {
+        br_detail: {
             type: String,
             required: true
         },
-        image_app: {
+        br_web_bg: {
             type: String,
             required: true
         },
-        perfumer_data: {
-            type: String
-        },
-        product_data: {
+        br_app_bg: {
             type: String,
-            required: true,
-            default: ''
+            required: true
+        },
+        br_perfumer_list: {
+            type: Array
+        },
+        br_stocks: {
+            type: Array
         },
         product_count: {
             type: Number,
-            required: true,
             default: 0
         },
         product_amount: {
             type: Number,
-            required: true,
             default: 0
         },
         payment_detail: {
@@ -217,10 +223,9 @@ const brand = new mongoose.Schema(
             default: 0
         },
         payment_method: {
-            type: String,
-            required: true
+            type: String
         }
-    }, { collection: 'delivery_data' }
+    }, { collection: 'brand_data' }
 )
 
 const delivery_data = new mongoose.Schema(
@@ -433,13 +438,6 @@ const adjustment_list = new mongoose.Schema(
     }, { collection: 'adjustment_list' }
 )
 
-const imageSchema = new mongoose.Schema(
-    {
-        image_name: String,
-        image: String
-    }, { collection: 'images' }
-)
-
 const calc_log = new mongoose.Schema(
     {
         user_id: {
@@ -538,27 +536,6 @@ const product_detail = new mongoose.Schema(
     }, { collection: 'product_detail' }
 )
 
-const delivery_detail = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true
-        },
-        return_amount: {
-            type: Number,
-            required: true
-        },
-        exchange_amount: {
-            type: Number,
-            required: true
-        },
-        place: {
-            type: String,
-            required: true
-        }
-    }, { collection: 'delivery_detail' }
-)
-
 const servey = new mongoose.Schema(
     {
         index: {
@@ -569,10 +546,8 @@ const servey = new mongoose.Schema(
             type: Boolean,
             required: true
         },
+        image: String,
         answer: {
-            type: Array
-        },
-        question: {
             type: Array
         },
         subQuestion: {
@@ -581,9 +556,21 @@ const servey = new mongoose.Schema(
     }, { collection: "servey" }
 )
 
+const servey_data = new mongoose.Schema(
+    {
+        userid: String,
+        qna: []
+    }, { collection: "servey_data" }
+)
+
 const file_upload = new mongoose.Schema(
     {
         title: {
+            type: String,
+            required: true
+        },
+
+        user_name: {
             type: String,
             required: true
         },
@@ -623,9 +610,8 @@ exports.scentre_product = mongoose.model('product', product);
 exports.scentre_adjustment_list = mongoose.model('adjustment_list', adjustment_list);
 exports.scentre_calc_log = mongoose.model('calc_log', calc_log);
 exports.scentre_product_detail = mongoose.model('product_detail', product_detail);
-exports.scentre_delivery_detail = mongoose.model('delivery_detail', delivery_detail);
 exports.scentre_review = mongoose.model('review', review);
 exports.scentre_perfume_recommend = mongoose.model('perfume-recommend', perfume_recommend);
 exports.scentre_servey = mongoose.model('servey', servey);
-exports.scentre_image = mongoose.model('images', imageSchema);
+exports.scentre_serveydata = mongoose.model('servey_data', servey_data);
 exports.scentre_file_upload = mongoose.model("file_upload", file_upload);

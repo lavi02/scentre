@@ -13,13 +13,15 @@ var order_api = require("./routes/api/services/order");
 var servey_api = require("./routes/api/services/servey");
 var user_api = require("./routes/api/user/status");
 var brand_api = require("./routes/api/services/brand");
-var banner_api = require("./routes/functions/banner")
+var banner_api = require("./routes/functions/banner");
+var stocks_api = require("./routes/api/services/stocks");
 
 var admin_api = require("./routes/api/user/admin");
 
 var test_datas = require("./controllers/test_datas");
 var image = require("./routes/functions/image");
 
+var jwt_authi = require("./middlewares/check_token");
 var app = express();
 
 test_datas;
@@ -45,7 +47,9 @@ app.use('/', user_api);
 app.use('/api/v1/brand', brand_api);
 app.use('/api/v1/components/', banner_api);
 app.use('/api/v1/admin', admin_api);
+app.use('/api/v1/services/', stocks_api);
 app.use('/', image);
+app.use('/', jwt_authi);
 ///
 
 // catch 404 and forward to error handler

@@ -3,21 +3,22 @@ var stocks = require('../../../models/db_stocks');
 var main = require("../../../models/db_main");
 var router = Router();
 
-router.get('/', (req, res) => {
+router.get('/stocks/', async (req, res) => {
     let data = req.body;
     let result = await stocks.stocks_get(data);
+    console.log(result);
     if (result != null) {
-        res.status(200).json(data[0])
+        res.status(200).json(result);
     }
 
     else {
         res.status(400).json({
-            "message": error 
+            "message": "there is no datas."
         })
     }
 })
 
-router.post('/', async function (req, res) {
+router.post('/stocks/', async function (req, res) {
     let data = req.body;
     let result = await stocks.stocks_post(data);
 
@@ -34,7 +35,7 @@ router.post('/', async function (req, res) {
     }
 })
 
-router.delete('/', (req, res) => {
+router.delete('/stocks/', async (req, res) => {
     let data = await stocks.stocks_delete(req.body);
     if (data != null) {
         res.status(201).json({

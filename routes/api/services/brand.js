@@ -3,25 +3,17 @@ var brand = require('../../../models/db_brand');
 var main = require("../../../models/db_extra");
 var router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     let data = req.body;
-    let result = brand.brand_get(data);
+    let result = await brand.brand_get(data);
+
     if (result != null) {
-        res.status(200).json({
-            "br_code": data.br_code,
-            "br_name": data.br_name,
-            "br_logo": data.br_logo,
-            "br_detail": data.br_detail,
-            "br_web_bg": data.br_web_bg,
-            "br_app_bg": data.br_app_bg,
-            "br_perfumer_list": data.br_perfumer_list,
-            "br_stocks": data.br_stocks
-        })
+        res.status(200).send(result)
     }
 
     else {
         res.status(400).json({
-            "message": error 
+            "message": err
         })
     }
 })
@@ -58,8 +50,9 @@ router.delete('/', (req, res) => {
     }
 })
 
-router.get('/perfume', (req, res) => {
-    let data = main.best_and_recommend(req);
+router.get('/perfume', async (req, res) => {
+    let data = await main.best_and_recommend(req);
+
     if (data != null) {
         res.status(200).json({
             "br_code": data[0].best,

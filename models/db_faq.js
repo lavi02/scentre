@@ -1,9 +1,12 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.faq_get = async (req) => {
+    if (Object.keys(req).length === 0 && req.constructor === Object)
+        return db_data.scentre_faq.find({});
+
     return db_data.scentre_faq.find(
         {
-            'title': req.body.title
+            'index': req.index
         }
     ).then(
         () => { return 0; }

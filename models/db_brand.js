@@ -1,7 +1,14 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.brand_get = async (req) => {
-    return db_data.scentre_brand.find({})  
+    console.log(req);
+        
+    if (Object.keys(req).length === 0 && req.constructor === Object)
+        return db_data.scentre_brand.find({});
+
+    return db_data.scentre_brand.find(
+        { 'br_code': req.br_code }
+    )
 }
 
 exports.brand_add_perfumer = async (req) => {
@@ -33,13 +40,13 @@ exports.perfumer_get = async (req) => {
 exports.brand_post = async (req) => {
     const brand_data = new db_data.scentre_brand(
         {
-            code_number: req.br_code, 
-            brand_name: req.br_name,
-            logo: req.br_logo,
-            brand_detail: req.br_detail,
-            image_web: req.br_web_bg,
-            image_app: req.br_app_bg,
-            perfumer_data: req.br_perfumer_list
+            br_code: req.br_code, 
+            br_name: req.br_name,
+            br_logo: req.br_logo,
+            br_detail: req.br_detail,
+            br_web_bg: req.br_web_bg,
+            br_app_bg: req.br_app_bg,
+            br_perfumer_list: req.br_perfumer_list
         })
 
         return brand_data.save().then(

@@ -1,12 +1,15 @@
 const db_data = require('../controllers/mg_collection');
 
 exports.userStatus_get = async (req) => {
+    if (Object.keys(req).length === 0 && req.constructor === Object)
+        return db_data.scentre_user_data.find({});
+    
     return db_data.scentre_user_data.find(
-        { 'id': req.id }
+        {'id': req.id }
     )
 }
 
-exports.userStatus_post = (req) => {
+exports.userStatus_post = async (req) => {
     const user_data = new db_data.scentre_user_data(
         {
             "type": req.type,
@@ -35,9 +38,16 @@ exports.userStatus_post = (req) => {
         ).catch((err) => { return err; });
 }
 
-exports.userStatus_put = (req) => {
-    const { id } = req.id;
-    return db_data.scentre_user_data.findByIdAndUpdate(id, req);
+exports.userStatus_put = async (req) => {
+    const id = req.id;
+    const token = req.token != undefined ? req.token : "0";
+
+    let results = await db_data.scentre_user_data.updateOne(
+        {"id":  id }, 
+        {$set: { "token": token }}
+    );
+
+    return results
 }
 
 exports.change_userStatus_rank = async (req) => {

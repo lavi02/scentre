@@ -17,10 +17,11 @@ exports.banner_get = async () => {
 }
 
 exports.image_datas_get = async (req) => {
-    await db_data.scentre_image.find(
+    await db_data.scentre_file_upload.find(
         { 
             image_name: req.image_name,
-            user_name: req.user_name
+            user_name: req.user_name,
+            target: req.target
          }
     );
 }

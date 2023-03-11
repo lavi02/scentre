@@ -1,31 +1,48 @@
 var Router =  require('express');
+var fs = require('fs');
 var router = Router();
 const images = require("../../middlewares/file_upload");
 const db_data = require('../../controllers/mg_collection');
-const multer = require("multer");
 
-router.post('/api/v1/upload', images.image_storage.single('image'), (req, res) => {
-    console.log(req.file.originalname + Date.now().toString());
-    if (req.file === undefined)
+router.post('/api/v1/upload/:username/:target', images.image_storage.array('image', 10), async (req, res) => {
+    if (req.files === undefined) {
         res.status(400).json({
             "message": "bad input parameters."
         })
+    }
     else {
-        const image_uri = new db_data.scentre_file_upload(
-        {
-            'title': req.file.originalname,
-            'path': './uploads/'
-        })
+        try {
+            let files_data = [];
+            for (let i = 0; i < req.files.length; i++) {
+                let titles = req.files[i].originalname;
 
-        image_uri.save().then(
-            res.status(200).json({
-            "message": "successfully generated."
+                files_data.push(
+                    { 
+                        title: titles,
+                        user_name: req.params.username,
+                        path: req.params.target
+                    }
+                );
+            }
+
+            console.log(files_data);
+
+            db_data.scentre_file_upload.insertMany(files_data).then(
+                () => {
+                    res.status(200).json({
+                        "message": "successfully generated."
+                    })
+                }
+            ).catch((err) => {
+                res.status(401).json({
+                    "message": err
+                })
             })
-        ).catch((err) => {
-            res.status(400).json({
-            "message": err
+        } catch (err) {
+            res.status(401).json({
+                "message": err
             })
-        })    
+        }
     }
 })
 
