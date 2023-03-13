@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const db_data = require('../../../controllers/mg_collection');
 const { jwt_query } = require('../../../controllers/jwt');
 const mails = require("../../../middlewares/mail_system");
+const messages = require("../../../middlewares/message");
 
 router.get('/api/v1/users', async (req, res) => {
     let data = await users.userStatus_get(req.body);
@@ -91,6 +92,8 @@ router.get('/api/v1/users/find_acc', async (req, res) => {
             if (pswd_result.ok == 1) {
                 const mail_data = mails.opt(data.email, "비밀번호가 변경되었습니다.", "변경된 비밀번호: " + data.email);
                 mails.sendMail(mail_data);
+                
+                messages.send_message(data.email, data.id, data.ph_number);
 
                 res.status(200).json(
                     { "message": "successfully Changed." }

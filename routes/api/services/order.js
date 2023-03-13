@@ -1,6 +1,7 @@
 var Router =  require('express');
 var order = require('../../../models/db_order');
 var user = require('../../../models/db_users');
+const payments = require("../../../middlewares/payment");
 var router = Router();
 
 router.get('/api/v1/order', async (req, res) => {
@@ -14,6 +15,18 @@ router.get('/api/v1/order', async (req, res) => {
             "message": "bad input parameter"
         })
     }
+})
+
+router.get('/api/v1/order/:id', (req, res) => {
+    let results = payments.naver_pay(req.body);
+
+    if (results != 0) {
+        res.status(200).send(results);
+    }
+
+    res.status(400).json({
+        "message": "bad input parameter."
+    })
 })
 
 router.post('/api/v1/order', (req, res) => {
